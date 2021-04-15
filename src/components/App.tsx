@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { findMovie, discoverMovie } from '../utils'
+import MovieCard from './MovieCard'
 
 const App = () => {
-  return <h1>Start</h1>
+  const [state, setState] = useState(null)
+  const [isFetching, setIsFetching] = useState(true)
+
+  useEffect(() => {
+    discoverMovie().then((moviesList) => {
+      setState(moviesList)
+      setIsFetching(false)
+    })
+  }, [])
+
+  return (
+    <>
+      {!isFetching && state.map((item: any) => <MovieCard movie={item} />)}
+    </>
+  )
 }
 export default App
