@@ -1,9 +1,10 @@
+import { fetchGenres } from './store/reducer'
 import { Movie, RawMovie } from './type'
 
 const baseUrl = 'https://api.themoviedb.org/3/'
 const apikey = '?api_key=314e6dde9895e914a26e321ea921a444'
 const language = '&language=ru-RU'
-const posterPath = 'https://image.tmdb.org/t/p/w500/'
+const posterPath = 'https://image.tmdb.org/t/p/w500'
 
 const getResource = async (url: string) => {
   return await fetch(url).then((data) => data.json())
@@ -28,7 +29,7 @@ const movieFormating = ({
   voteAverage: vote_average,
   voteCount: vote_count,
   releaseDate: release_date,
-  genres: genre_ids
+  genres: genre_ids,
 })
 
 export const findMovie = async (id: number) => {
@@ -42,4 +43,15 @@ export const discoverMovie = async () => {
   const res = await getResource(url)
   const result = res.results.map((movie: RawMovie) => movieFormating(movie))
   return await result
+}
+
+export const getGenres = async () => {
+  const url = baseUrl + 'genre/movie/list' + apikey + language
+  const res = await getResource(url)
+
+  const genresList: {[k: number]: string } = {};
+
+  res.genres.forEach(({id, name}: {id: number, name: string}) => {genresList[id] = name})
+  
+  fetchGenres(genresList)
 }
