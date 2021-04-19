@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { State } from '../type'
 
 const initialState: State = {
-  genresList: {1: 'test'}
+  genresList: {1: 'test'},
+  moviesList: []
 }
 
 const genresSlice = createSlice({

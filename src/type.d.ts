@@ -34,5 +34,6 @@ export type RawMovie = {
 
 
 export type State = {
-  genresList: { [id: number]: string }
+  genresList: { [id: number]: string },
+  moviesList: Movie[]
 }
