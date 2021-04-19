@@ -52,6 +52,5 @@ export const getGenres = async () => {
   const genresList: {[k: number]: string } = {};
 
   res.genres.forEach(({id, name}: {id: number, name: string}) => {genresList[id] = name})
-  
-  fetchGenres(genresList)
+  return genresList
 }
