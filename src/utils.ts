@@ -30,7 +30,7 @@ const movieFormating = ({
   poster: posterPath + poster_path,
   voteAverage: vote_average,
   voteCount: vote_count,
-  releaseDate: dateFormatting(release_date),
+  releaseDate: release_date ? dateFormatting(release_date) : 'none',
   genres: genre_ids,
 })
 
