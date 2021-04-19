@@ -1,7 +1,7 @@
 import { fetchGenres } from './store/reducer'
 import { Movie, RawMovie } from './type'
 
-const baseUrl = 'https://api.themoviedb.org/3/'
+const baseUrl = 'https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/'
 const apikey = '?api_key=314e6dde9895e914a26e321ea921a444'
 const language = '&language=ru-RU'
 const posterPath = 'https://image.tmdb.org/t/p/w500'
