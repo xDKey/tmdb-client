@@ -1,19 +1,30 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { Movie } from '../type'
-import { getGenres } from '../utils'
+import { Movie, State } from '../type'
 
 const MovieCard = ({ movie }: { movie: Movie }) => {
+  const genresList = useSelector((state: State) => state.genresList)
+
+  const renderedGenres = movie.genres.map((genre: number) => (
+    <li key={genre}>{genresList[genre]}</li>
+  ))
+
   return (
     <StyledMovieCard>
+      <Poster src={movie.poster} />
       <TitleWrapper>
-        <Title>{movie.title}</Title>
-        <OriginalTitle>({movie.originalTitle})</OriginalTitle>
-        <Poster src={movie.poster} />
+        <h1>{movie.title}</h1>
+        <h4>({movie.originalTitle})</h4>
+        <p>{movie.overview}</p>
       </TitleWrapper>
-      <p>{movie.overview}</p>
       <DetailWrapper>
-        <p>Жанр: {}</p>
+        <p>Дата выхода: {movie.releaseDate}</p>
+        Жанр:
+        <Genres>{renderedGenres}</Genres>
+        <p>
+          Рейтинг: {movie.voteAverage} ({movie.voteCount})
+        </p>
       </DetailWrapper>
     </StyledMovieCard>
   )
@@ -31,31 +42,33 @@ const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80%;
 
-  margin-right: 30px;
-
-  width: 300px;
+  padding-right: 30px;
+  padding-left: 30px;
+  h1 {
+    margin: 0;
+    text-align: center;
+  }
+  h4 {
+    text-align: center;
+  }
 `
 
 const DetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
 
-  width: 80%;
+  width: 30%;
 `
 
 const Poster = styled.img`
   width: 200px;
 `
 
-const Title = styled.h1`
-  margin: 0;
-  text-align: center;
-`
-
-const OriginalTitle = styled.h4`
-  text-align: center;
+const Genres = styled.ul`
+  text-transform: capitalize;
+  list-style-position: inside;
 `
 
 export default MovieCard
