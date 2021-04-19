@@ -1,10 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { useAppSelector } from '../hooks'
 import { Movie, State } from '../type'
 
 const MovieCard = ({ movie }: { movie: Movie }) => {
-  const genresList = useSelector((state: State) => state.genresList)
+  const genresList = useAppSelector((state: State) => state.genresList)
 
   const renderedGenres = movie.genres.map((genre: number) => (
     <li key={genre}>{genresList[genre]}</li>
