@@ -14,10 +14,13 @@ const genresSlice = createSlice({
       const fetchedGenresList = action.payload
       state.genresList = fetchedGenresList
     },
-
+    fetchMovies: (state, action) => {
+      const fetchedMoviesList = action.payload
+      state.moviesList = fetchedMoviesList
+    }
   },
 })
 
-export const { fetchGenres } = genresSlice.actions
+export const { fetchGenres, fetchMovies } = genresSlice.actions
 
 export default genresSlice.reducer

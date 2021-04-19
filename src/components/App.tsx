@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { discoverMovie, getGenres } from '../utils'
 import { fetchGenres, fetchMovies } from '../store/reducer'
 import MovieCard from './MovieCard'
+import Header from './Header'
 import { useAppDispatch, useAppSelector } from '../hooks'
 
 const App = () => {
-  const [state, setState] = useState(null)
   const [isFetching, setIsFetching] = useState(true)
 
   const dispatch = useAppDispatch()
@@ -23,6 +23,7 @@ const App = () => {
 
   return (
     <>
+      <Header />
       {!isFetching &&
         moviesList.map((movie: any) => <MovieCard movie={movie} key={movie.id} />)}
     </>

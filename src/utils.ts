@@ -1,16 +1,17 @@
-import { fetchGenres } from './store/reducer'
 import { Movie, RawMovie } from './type'
 
-const baseUrl = 'https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/'
+const baseUrl =
+  'https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/'
 const apikey = '?api_key=314e6dde9895e914a26e321ea921a444'
 const language = '&language=ru-RU'
 const posterPath = 'https://image.tmdb.org/t/p/w500'
 
 const getResource = async (url: string) => {
-  return await fetch(url).then((data) => data.json())
+  return await fetch(url).then((data) => data.json()).catch(() => console.log('some'))
 }
 
-const dateFormatting = (date: string): string =>  date.replace(/(\d+)-(\d+)-(\d+)/, `$3.$2.$1`) // yyyy-mm-dd -> dd.mm.yyyy
+const dateFormatting = (date: string): string =>
+  date.replace(/(\d+)-(\d+)-(\d+)/, `$3.$2.$1`) // yyyy-mm-dd -> dd.mm.yyyy
 
 const movieFormating = ({
   id,
@@ -51,8 +52,19 @@ export const getGenres = async () => {
   const url = baseUrl + 'genre/movie/list' + apikey + language
   const res = await getResource(url)
 
-  const genresList: {[k: number]: string } = {};
+  const genresList: { [k: number]: string } = {}
 
-  res.genres.forEach(({id, name}: {id: number, name: string}) => {genresList[id] = name})
+  res.genres.forEach(({ id, name }: { id: number; name: string }) => {
+    genresList[id] = name
+  })
   return genresList
+}
+
+export const searchMovie = async (query: string) => {
+  const url = baseUrl + 'search/movie' + apikey + language + `&query=${query}`
+  const res = await getResource(url)
+  console.log(res)
+
+  const result = res.results.map((movie: RawMovie) => movieFormating(movie))
+  return await result
 }
