@@ -10,6 +10,8 @@ const getResource = async (url: string) => {
   return await fetch(url).then((data) => data.json())
 }
 
+const dateFormatting = (date: string): string =>  date.replace(/(\d+)-(\d+)-(\d+)/, `$3.$2.$1`) // yyyy-mm-dd -> dd.mm.yyyy
+
 const movieFormating = ({
   id,
   title,
@@ -28,7 +30,7 @@ const movieFormating = ({
   poster: posterPath + poster_path,
   voteAverage: vote_average,
   voteCount: vote_count,
-  releaseDate: release_date,
+  releaseDate: dateFormatting(release_date),
   genres: genre_ids,
 })
 
