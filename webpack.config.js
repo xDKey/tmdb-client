@@ -28,7 +28,7 @@ const config = {
 
 module.exports = (env, argv) => {
   if (argv && argv.mode === 'production')
-    config.output.publicPath = '/todoapp-typescript/'
+    config.output.publicPath = '/tmdb-client/'
 
   return config
 }
