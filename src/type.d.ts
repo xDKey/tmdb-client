@@ -10,11 +10,6 @@ export type Movie = {
   genres: Array<number>
 }
 
-export type Action = {
-  type: string
-  payload?: any
-}
-
 export type RawMovie = {
   adult: boolean
   backdrop_path: string
@@ -31,7 +26,6 @@ export type RawMovie = {
   vote_average: number
   vote_count: number
 }
-
 
 export type State = {
   genresList: { [id: number]: string },
