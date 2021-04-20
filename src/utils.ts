@@ -51,19 +51,12 @@ export const discoverMovie = async () => {
 export const getGenres = async () => {
   const url = baseUrl + 'genre/movie/list' + apikey + language
   const res = await getResource(url)
-
-  const genresList: { [k: number]: string } = {}
-
-  res.genres.forEach(({ id, name }: { id: number; name: string }) => {
-    genresList[id] = name
-  })
-  return genresList
+  return res.genres
 }
 
 export const searchMovie = async (query: string) => {
   const url = baseUrl + 'search/movie' + apikey + language + `&query=${query}`
   const res = await getResource(url)
-  console.log(res)
 
   const result = res.results.map((movie: RawMovie) => movieFormating(movie))
   return await result

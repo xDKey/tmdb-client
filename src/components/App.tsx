@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { discoverMovie, getGenres } from '../utils'
-import { fetchGenres, fetchMovies } from '../store/reducer'
+import {
+  fetchGenres,
+  fetchPreloadedMovies,
+} from '../store/reducer'
 import MovieCard from './MovieCard'
 import Header from './Header'
 import { useAppDispatch, useAppSelector } from '../hooks'
@@ -9,23 +11,20 @@ const App = () => {
   const [isFetching, setIsFetching] = useState(true)
 
   const dispatch = useAppDispatch()
-  const moviesList = useAppSelector(state => state.moviesList)
+  const moviesList = useAppSelector((state) => state.moviesList)
 
   useEffect(() => {
-    getGenres().then((data) => {
-      dispatch(fetchGenres(data))
-    })
-    discoverMovie().then((moviesList) => {
-      dispatch(fetchMovies(moviesList))
-      setIsFetching(false)
-    })
+    dispatch(fetchGenres())
+    dispatch(fetchPreloadedMovies()).then(() => setIsFetching(!isFetching))
   }, [])
 
   return (
     <>
       <Header />
       {!isFetching &&
-        moviesList.map((movie: any) => <MovieCard movie={movie} key={movie.id} />)}
+        moviesList.map((movie: any) => (
+          <MovieCard movie={movie} key={movie.id} />
+        ))}
     </>
   )
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useAppDispatch } from '../hooks'
-import { fetchMovies } from '../store/reducer'
-import { searchMovie } from '../utils'
+import { fetchSearhedMovie } from '../store/reducer'
 
 const Search = () => {
   const [inputValue, setInputValue] = useState('')
@@ -13,7 +12,7 @@ const Search = () => {
     if (!inputValue) return
 
     timer.current = setTimeout(() => {
-      searchMovie(inputValue).then((movies) => dispatch(fetchMovies(movies)))
+       dispatch(fetchSearhedMovie(inputValue))
     }, 1000)
 
     return () => clearTimeout(timer.current)
