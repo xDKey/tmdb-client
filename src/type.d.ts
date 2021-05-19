@@ -31,3 +31,9 @@ export type State = {
   genresList: { [id: number]: string },
   moviesList: Movie[]
 }
+
+export type Filter =  {
+  [key: string]: number | string
+  year?: number
+  with_genres?: string
+}

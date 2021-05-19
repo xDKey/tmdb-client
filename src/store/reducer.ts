@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { State } from '../type'
+import { Filter, State } from '../type'
 import { apiClient } from '../utils/apiClient'
 
 const api = new apiClient()
@@ -15,6 +15,10 @@ export const fetchPreloadedMovies = createAsyncThunk(
 export const fetchSearhedMovie = createAsyncThunk(
   'movies/findMovie',
   async (query: string) => api.searchMovie(query)
+)
+export const fetchFilteredMovies = createAsyncThunk(
+  'movies/fetchFilteredMovie',
+  async (vars: Filter) => api.discoverMovie(vars)
 )
 
 const initialState: State = {
@@ -41,6 +45,10 @@ const genresSlice = createSlice({
       state.moviesList = fetchedMoviesList
     })
     builder.addCase(fetchSearhedMovie.fulfilled, (state, action) => {
+      const fetchedMoviesList = action.payload
+      state.moviesList = fetchedMoviesList
+    })
+    builder.addCase(fetchFilteredMovies.fulfilled, (state, action) => {
       const fetchedMoviesList = action.payload
       state.moviesList = fetchedMoviesList
     })

@@ -1,4 +1,4 @@
-import { Movie, RawMovie } from '../type'
+import { Movie, RawMovie, Filter } from '../type'
 
 const dateFormatting = (date: string): string =>
   date.replace(/(\d+)-(\d+)-(\d+)/, `$3.$2.$1`) // yyyy-mm-dd -> dd.mm.yyyy
@@ -45,15 +45,25 @@ export class apiClient {
     return res.genres
   }
 
-  public findMovie = async (id: number) => {
+  public getMovie = async (id: number) => {
     const url = this.baseUrl + 'movie/' + id + this.apikey + this.language
     const res = await this.getResource(url)
     return this.movieFormating(res)
   }
 
-  public discoverMovie = async () => {
+  public discoverMovie = async (filter?: Filter) => {
     const url = this.baseUrl + 'discover/movie' + this.apikey + this.language
-    const res = await this.getResource(url)
+    
+    const filters = ['']
+
+    if (filter) {
+      for (let key in filter) {
+        const filterQuery = `${key}=${filter[key]}`
+        filters.push(filterQuery)
+      } 
+    }
+
+    const res = await this.getResource(url + filters.join('&'))
     const result = res.results.map((movie: RawMovie) =>
       this.movieFormating(movie)
     )
